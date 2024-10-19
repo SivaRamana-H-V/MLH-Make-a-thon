@@ -15,7 +15,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double time = 0;
   double height = 0;
   double initialHeight = birdY;
-  bool gameHasStarted = false;
+  bool gameHasStarted = true;
   static double barrierXone = 1;
   double barrierXtwo = barrierXone + 1.5;
   int score = 0;
@@ -31,6 +31,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final double barrierHeightOneBottom = 200.0;
   final double barrierHeightTwoTop = 250.0;
   final double barrierHeightTwoBottom = 150.0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void jump() {
     setState(() {
@@ -69,120 +74,94 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // Check for collisions
       if (birdY > 1) {
+        birdY = 1;
         timer.cancel();
-        gameHasStarted = false;
-        _showDialog(); // Show game over dialog when bird hits the ground or barriers
+        // gameHasStarted = false;
       }
     });
-  }
-
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.brown,
-          title: const Text('GAME OVER', style: TextStyle(color: Colors.white)),
-          content: Text('Your Score: ${score.toString()}',
-              style: const TextStyle(color: Colors.white)),
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (score > highScore) {
-                  highScore = score;
-                }
-
-                // Reset the game state without calling initState()
-                setState(() {
-                  birdY = 0; // Reset bird position
-                  barrierXone = 1; // Reset barriers
-                  barrierXtwo = barrierXone + 1.5;
-                  score = 0; // Reset score
-                  gameHasStarted = false; // Set game state back to initial
-                });
-
-                Navigator.of(context).pop(); // Close the dialog box
-              },
-              child: const Text('PLAY AGAIN',
-                  style: TextStyle(color: Colors.white)),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (gameHasStarted) {
-          jump();
-        } else {
-          startGame();
-        }
-      },
-      child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                color: Colors.blue,
-                child: Stack(
-                  children: [
-                    Container(
-                      alignment: const Alignment(0, -0.3),
-                      child: gameHasStarted
-                          ? const Text(' ')
-                          : const Text(
-                              'T A P   T O   P L A Y',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
-                            ),
-                    ),
-                    MyBird(birdY: birdY),
-                    AnimatedContainer(
-                        duration: const Duration(milliseconds: 0),
-                        alignment: Alignment(barrierXone, 1.1),
-                        child: const MyBarriers(size: 200.0)),
-                    AnimatedContainer(
-                        duration: const Duration(milliseconds: 0),
-                        alignment: Alignment(barrierXone, -1.1),
-                        child: const MyBarriers(size: 200.0)),
-                    AnimatedContainer(
-                        duration: const Duration(milliseconds: 0),
-                        alignment: Alignment(barrierXtwo, 1.1),
-                        child: const MyBarriers(size: 150.0)),
-                    AnimatedContainer(
-                        duration: const Duration(milliseconds: 0),
-                        alignment: Alignment(barrierXtwo, -1.1),
-                        child: const MyBarriers(size: 250.0)),
-                  ],
+      // onTap: () {
+      //   if (gameHasStarted) {
+      //     jump();
+      //   } else {
+      //     startGame();
+      //   }
+      // },
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  color: Colors.blue,
+                  child: Stack(
+                    children: [
+                      const Text(
+                        // pitchCubitState.toString(),
+                        '',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Container(
+                        alignment: const Alignment(0, -0.3),
+                        child: gameHasStarted
+                            ? const Text(' ')
+                            : const Text(
+                                'T A P   T O   P L A Y',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                      ),
+                      MyBird(birdY: birdY),
+                      AnimatedContainer(
+                          duration: const Duration(milliseconds: 0),
+                          alignment: Alignment(barrierXone, 1.1),
+                          child: const MyBarriers(size: 200.0)),
+                      AnimatedContainer(
+                          duration: const Duration(milliseconds: 0),
+                          alignment: Alignment(barrierXone, -1.1),
+                          child: const MyBarriers(size: 200.0)),
+                      AnimatedContainer(
+                          duration: const Duration(milliseconds: 0),
+                          alignment: Alignment(barrierXtwo, 1.1),
+                          child: const MyBarriers(size: 150.0)),
+                      AnimatedContainer(
+                          duration: const Duration(milliseconds: 0),
+                          alignment: Alignment(barrierXtwo, -1.1),
+                          child: const MyBarriers(size: 250.0)),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: 15,
-              color: Colors.green,
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.brown,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('Score: ${score.toString()}',
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.white)),
-                    Text('Best: ${highScore.toString()}',
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.white)),
-                  ],
+              Container(
+                height: 15,
+                color: Colors.green,
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.brown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Score: ${score.toString()}',
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.white)),
+                      Text('Best: ${highScore.toString()}',
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.white)),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
