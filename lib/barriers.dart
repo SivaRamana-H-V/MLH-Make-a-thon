@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
 class MyBarriers extends StatelessWidget {
-  final double size;
-  const MyBarriers({super.key, required this.size});
+  final barriersWidth;
+  final barriersHeight;
+
+  const MyBarriers({
+    super.key,
+    this.barriersWidth,
+    this.barriersHeight,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: size,
+      width: MediaQuery.of(context).size.width * barriersWidth / 2,
+      height: MediaQuery.of(context).size.height * 3 / 4 * barriersHeight / 2,
       decoration: BoxDecoration(
           color: Colors.green,
           border: Border.all(

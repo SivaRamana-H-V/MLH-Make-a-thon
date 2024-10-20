@@ -4,26 +4,12 @@ import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:record/record.dart';
-import 'package:voice_control_race_game/my_home_page.dart';
+import 'package:voice_control_race_game/home_page.dart';
 import 'package:voice_control_race_game/pitch_detecter.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Flutter Demo',
-//       home: MyHomePage(),
-//     );
-//   }
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -52,48 +38,12 @@ class MyApp extends StatelessWidget {
             ),
           ],
           child: MaterialApp(
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: const MyHomePage(),
+            home: const HomePage(),
           )),
     );
   }
 }
-
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final pitchCubitState = context.watch<PitchCubit>().state;
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Pitchup sample- Guitar tuner"),
-//       ),
-//       body: Center(
-//         child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             mainAxisSize: MainAxisSize.max,
-//             children: [
-//               Text(
-//                 pitchCubitState.note,
-//                 style: const TextStyle(
-//                     color: Colors.black87,
-//                     fontSize: 65.0,
-//                     fontWeight: FontWeight.bold),
-//               ),
-//               Text(
-//                 pitchCubitState.status,
-//                 style: const TextStyle(
-//                   color: Colors.black87,
-//                   fontSize: 18.0,
-//                 ),
-//               ),
-//             ]),
-//       ),
-//     );
-//   }
-// }

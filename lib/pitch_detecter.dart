@@ -65,22 +65,26 @@ class PitchCubit extends Cubit<double> {
         255.0; // Maximum frequency for high female voices
 
     // Handle out-of-range values
-    if (frequency < minFrequency)
-      return 1.0; // Return 1.0 when frequency is too low
-    if (frequency > maxFrequency)
-      return -1.0; // Return -1.0 when frequency is too high
+    if (frequency < minFrequency) {
+      return -1.0; // Return -1.0 when frequency is too low
+    }
+    if (frequency > maxFrequency) {
+      return 1.0; // Return 1.0 when frequency is too high
+    }
 
     // Normalize the frequency within the range
     double normalizedValue =
         (frequency - minFrequency) / (maxFrequency - minFrequency);
 
-    // Scale it to -1.0 to 1.0 with smoothness
-    double smoothValue = 2 * (normalizedValue) - 1;
+    // Scale it to -1.0 to 1.0
+    double scaledValue =
+        (normalizedValue * 2.0) - 1.0; // Adjusted to range [-1.0, 1.0]
 
     // Apply smoothing to avoid abrupt changes (exponential smoothing factor)
-    smoothValue = _applySmoothing(smoothValue);
+    double smoothedValue = _applySmoothing(scaledValue);
 
-    return smoothValue;
+    // Return the final smoothed value (-1.0 to 1.0)
+    return smoothedValue;
   }
 
   double _applySmoothing(double value) {
