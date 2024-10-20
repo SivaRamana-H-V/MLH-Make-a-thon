@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:record/record.dart';
+import 'package:voice_control_race_game/barriers.dart';
 import 'package:voice_control_race_game/my_bird.dart';
 import 'package:voice_control_race_game/pitch_detecter.dart';
 
@@ -118,9 +119,16 @@ class _MusicLessorPageState extends State<MusicLessorPage> {
                       color: Colors.blue,
                       child: Stack(
                         children: [
-                          Text('birdY Value: $birdY \nPitch Value: $pitchValue',
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.white)),
+                          // Barriers
+                          Container(
+                            alignment: const Alignment(0, -0.3),
+                            child: MyBarriers(
+                                barriersWidth: barriersWidth,
+                                barriersHeight: barriersHeight[0][0]),
+                          ),
+                          // Text('birdY Value: $birdY \nPitch Value: $pitchValue',
+                          //     style: const TextStyle(
+                          //         fontSize: 20, color: Colors.white)),
                           Container(
                             alignment: const Alignment(0, -0.3),
                             child: gameHasStarted
